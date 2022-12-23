@@ -32,23 +32,14 @@ const time = document.querySelector('.time').querySelector('p');
 const cost = document.querySelector('.cost').querySelector('p');
 const photo = document.querySelector('.photo').querySelector('img');
 
-// Определение верхней навигации и задание событий клика
-const nav = document.querySelectorAll('.radio');
-nav[0].addEventListener('click', () => {
-    nav[0].querySelector('input').toggleAttribute('checked');
-    changePic(0);
-});
-nav[1].addEventListener('click', () => {
-    nav[1].querySelector('input').toggleAttribute('checked');
-    changePic(1);
+// Определение верхней навигации, установка изначального значения и описание события клика
+const nav = document.querySelectorAll('li');
+nav[0].classList.add('checked');
+nav[0].addEventListener('click', () => changePic(0) );
+nav[1].addEventListener('click', () => changePic(1) );
+nav[2].addEventListener('click', () => changePic(2) );
 
-});
-nav[2].addEventListener('click', () => {
-    nav[2].querySelector('input').toggleAttribute('checked');
-    changePic(2);
-});
-
-// Определение положения стрелок и задание событий клика
+// Определение положения стрелок и описание событий клика
 const arrowLeft = document.querySelectorAll('.arrows')[0];
 const arrowRight = document.querySelectorAll('.arrows')[1];
 
@@ -69,36 +60,29 @@ arrowRight.addEventListener('click', () => {
     }
 });
 
-
-// Определение точек прокрутки и задача события клика
+// Определение точек прокрутки, начального значения и описание события клика
 const dots = document.querySelectorAll('.dots');
 dots[0].style = 'fill: #E3B873';
-
-dots[0].addEventListener('click', (elem) => {
-    changePic(0);
-});
-dots[1].addEventListener('click', (elem) => {
-    changePic(1);
-});
-dots[2].addEventListener('click', elem => {
-    changePic(2);
-});
+dots[0].addEventListener('click', () => changePic(0) );
+dots[1].addEventListener('click', () => changePic(1) );
+dots[2].addEventListener('click', () => changePic(2) );
 
 function changePic(num){
     // Очистка выделений исходного выделения
     dots.forEach(elem => elem.style = 'fill: #fff');
-    nav.forEach(elem => elem.querySelector('input').removeAttribute('checked'));
+    nav[curNum].classList.remove('checked');
 
-    // Назначение нового "слайда"
-    nav[num].querySelector('input').toggleAttribute('checked');
+    // Перекраска навигации и dots
+    nav[num].classList.add('checked');
     dots[num].style = 'fill:#E3B873';
+
+    // Замена значений
     city.innerHTML = data[num].city;
     area.innerText = data[num].area;
     time.innerText = data[num].time;
     cost.innerText = data[num].cost;
     photo.src = data[num].img;
 
+    // Обновление индекса текущего элемента
     curNum = num;
 }
-
-
